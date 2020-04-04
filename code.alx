@@ -1,0 +1,4 @@
+local bla = 5
+local blabla = 5 * 2
+print(var)
+
