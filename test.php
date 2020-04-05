@@ -1,13 +1,7 @@
 <?php
 
-function test($x) {
-    $x=5;
-    return [$x, $x+1];
-}
+echo 5*2;
 
 
-$a = 1;
-var_dump($a);
-var_dump(test($a));
-var_dump($a);
-
+echo 1;
+ echo 3;

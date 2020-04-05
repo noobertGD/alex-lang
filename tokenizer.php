@@ -13,6 +13,9 @@ function getNextToken($code, &$offset)
         '/^\s*=\s*/' => 'eq',
         '/^[0-9]+/' => 'number',
         '/^\s*\*\s*/' => 'multiplied',
+        '/^\s*\+\s*/' => 'plus',
+        '/^\s*\-\s*/' => 'minus',
+        '/^\s*\/\s*/' => 'divided'
 
 
     ];
