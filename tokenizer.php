@@ -5,38 +5,40 @@ function getNextToken($code, &$offset)
 
     $code = substr($code, $offset);
     $tokens = [
-        '/^\s*local /' => 'local',
         '/^\n+/' => 'enter',
+        '/^\s*local /' => 'local',
         '/^\s*print\(/' => 'print',
         '/^\)/' => 'closeParentheses',
         '/^[a-zA-Z][a-zA-Z0-9]+/' => 'variable',
         '/^\s*=\s*/' => 'eq',
-        '/^[0-9]+/' => 'number',
-        '/^\s*\*\s*/' => 'multiplied',
-        '/^\s*\+\s*/' => 'plus',
-        '/^\s*\-\s*/' => 'minus',
-        '/^\s*\/\s*/' => 'divided'
+        '/^\s*[0-9]+[ ]*/' => 'number',
+        '/^\s*\*|\+|\-|\/\s*/' => 'op',
+
 
 
     ];
+
     foreach ($tokens as $rx => $tokenName) {
 
 
         if (preg_match($rx,$code, $matches, PREG_OFFSET_CAPTURE, 0) === 1) {
-            //var_dump($rx,$code);
+
+
             $offset += strlen($matches[0][0]);
+            $matches[0][0] = trim($matches[0][0]);
 
 
-            return $tokenName;
+
+            return [$tokenName,$matches[0][0]];
         }
     }
 
     if (strlen($code) === 0) {
-        return 'end';
+        return ['end','end of code'];
     } else {
-        return 'error';
+        return ['error'];
     }
-    //var_dump($matches);
+
 
 }
 

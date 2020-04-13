@@ -3,25 +3,11 @@ require_once 'tokenizer.php';
 require_once 'compiler.php';
 $code = file_get_contents('code.alx');
 //echo $code . PHP_EOL;
-$offset = 0;
-$token = getNextToken($code, $offset);
-var_dump($token);
-//$errorLine = 1;
-while ($token !== false) {
-    //$errorLine++;
-    if ($token === 'end') {
-        break;
-    } elseif ($token === 'error') {
-        break;
-    }
-    $token = getNextToken($code, $offset);
-    var_dump($token);
-
-}
-//echo "error on line:" . $errorLine . PHP_EOL;
+$code = $code . PHP_EOL;
 
 
-$program = compile();
+
+$program = compile($code);
 
 
 function run($program)
