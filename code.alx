@@ -1,7 +1,10 @@
 local bla = 5
 local blabla = 7
-print(blabla)
 
+
+local 5 = 3
+
+print(blabla)
 
 print(bla)
 local test = 2 * 5

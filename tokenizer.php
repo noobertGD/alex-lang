@@ -2,8 +2,11 @@
 
 function getNextToken($code, &$offset)
 {
-
     $code = substr($code, $offset);
+
+    $pos = strpos($code, "\n");
+    var_dump($pos);
+
     $tokens = [
         '/^\n+/' => 'enter',
         '/^\s*local /' => 'local',
@@ -15,28 +18,26 @@ function getNextToken($code, &$offset)
         '/^\s*\*|\+|\-|\/\s*/' => 'op',
 
 
-
     ];
 
     foreach ($tokens as $rx => $tokenName) {
 
 
-        if (preg_match($rx,$code, $matches, PREG_OFFSET_CAPTURE, 0) === 1) {
+        if (preg_match($rx, $code, $matches, PREG_OFFSET_CAPTURE, 0) === 1) {
 
 
             $offset += strlen($matches[0][0]);
-            $matches[0][0] = trim($matches[0][0]);
+            $matches[0][0] = trim($matches[0][0], "\t ");
 
 
-
-            return [$tokenName,$matches[0][0]];
+            return [$tokenName, $matches[0][0]];
         }
     }
 
     if (strlen($code) === 0) {
-        return ['end','end of code'];
+        return ['end', 'end of code'];
     } else {
-        return ['error'];
+        return ['error',substr($code,0,$pos)];
     }
 
 

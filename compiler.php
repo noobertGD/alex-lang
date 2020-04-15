@@ -5,8 +5,7 @@ function compile($code)
     $returnCode = [];
     $instructions = "";
     $offset = 0;
-
-
+    $lineNumber = 1;
 
 
     $token = null;
@@ -14,6 +13,7 @@ function compile($code)
     while ($token !== false) {
 
         $token = getNextToken($code, $offset);
+
         $tokenName = $token[0];
         $instructions = $instructions . "#" . $tokenName;
 
@@ -58,18 +58,18 @@ function compile($code)
                 ];
                 $tokenList = [];
             } else {
-                echo "[ error ]compilation failed!" . PHP_EOL;
+
+                echo "[ error ] Compilation error on line " . $lineNumber . "." . PHP_EOL;
                 exit();
             }
+            $lineNumber += count_chars($token[1])[10];
         } elseif ($tokenName === 'error') {
-            echo "[ error ]syntax error!!" . PHP_EOL;
+            echo "[ error ] Syntax error at line " . $lineNumber . "." . " Unexpected token \"" . $token[1] . "\"" . PHP_EOL;
             exit();
         }
 
 
-
     }
-
 
 
     return $returnCode;
